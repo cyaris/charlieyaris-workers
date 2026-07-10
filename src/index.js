@@ -69,10 +69,24 @@ export default {
 
     if (request.method === "OPTIONS") {
       if (!ALLOWED_ORIGINS.has(origin)) {
-        return jsonResponse({ error: "Origin not allowed." }, 403, origin);
+        return new Response(null, {
+          status: 403,
+          headers: {
+            Vary: "Origin",
+          },
+        });
       }
 
-      return jsonResponse({}, 204, origin);
+      return new Response(null, {
+        status: 204,
+        headers: {
+          "Access-Control-Allow-Origin": origin,
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Max-Age": "86400",
+          Vary: "Origin",
+        },
+      });
     }
 
     if (request.method !== "POST") {
