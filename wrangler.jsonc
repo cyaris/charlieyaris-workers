@@ -7,6 +7,10 @@
 	"name": "contact-form-worker",
 	"main": "src/index.js",
 	"compatibility_date": "2026-07-10",
+        "vars": {
+            "CONTACT_FROM_EMAIL": "Website Contact <contact@mail.charlieyaris.com>",
+            "CONTACT_TO_EMAIL": "charlieyaris@gmail.com"
+        },
 	"observability": {
 		"enabled": true
 	},
