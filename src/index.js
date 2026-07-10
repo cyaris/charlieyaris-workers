@@ -235,27 +235,27 @@ export default {
 					'https://charlieyaris.com',
 				].join('\n'),
 				html: `
-            <p>Hi ${safeName},</p>
+          <p>Hi ${safeName},</p>
 
-            <p>Thanks for reaching out! I received your message and will get back to you as soon as I can.</p>
+          <p>Thanks for reaching out! I received your message and will get back to you as soon as I can.</p>
 
-            <p><strong>Here is a copy of your message:</strong></p>
+          <p><strong>Here is a copy of your message:</strong></p>
 
-            <blockquote
-              style="
-                margin: 1rem 0;
-                padding-left: 1rem;
-                border-left: 3px solid #cccccc;
-              "
-            >
-              <p><strong>Subject:</strong> ${safeSubject}</p>
-              <p>${safeMessage}</p>
-            </blockquote>
+          <blockquote
+            style="
+              margin: 0.25rem 0;
+              padding-left: 0.5rem;
+              border-left: 3px solid #cccccc;
+            "
+          >
+            <p style="margin: 0 0 0.25rem;"><strong>Subject:</strong> ${safeSubject}</p>
+            <p style="margin: 0;">${safeMessage}</p>
+          </blockquote>
 
-            <p>
-              Charlie Yaris<br>
-              <a href="https://charlieyaris.com">charlieyaris.com</a>
-            </p>
+          <p>
+            Charlie Yaris<br>
+            <a href="https://charlieyaris.com">charlieyaris.com</a>
+          </p>
           `,
 			});
 
