@@ -73,6 +73,11 @@ If the application uses Durable Objects or Workflows, refer to the relevant best
 - Durable Objects: https://developers.cloudflare.com/durable-objects/best-practices/rules-of-durable-objects/
 - Workflows: https://developers.cloudflare.com/workflows/build/rules-of-workflows/
 
+## GitHub Actions
+
+- Use `../shared-automation/AGENTS.md` as the source of truth for shared GitHub Actions, reusable workflow wrapper,
+  release-policy, dispatch, and automation documentation conventions.
+
 ## Release Management
 
 - While working in this repository, evaluate whether the accumulated changes represent a meaningful release milestone.
