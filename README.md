@@ -119,6 +119,11 @@ wrapper around the
 after changes are pushed to `dev`, the shared workflow opens a pull request back to the default branch when one does not
 already exist.
 
+`.github/workflows/auto-release.yml` is a manual-only wrapper around the
+[shared auto-release workflow](https://github.com/cyaris/shared-automation#githubworkflowsauto-releaseyml). It defaults
+to report-only reconciliation with `publish=false`; release creation or existing-release updates still require reviewing
+the generated plan and explicitly enabling publication for an approved run.
+
 ## Production Checklist
 
 Before deploying, verify:
