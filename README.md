@@ -109,11 +109,15 @@ This runs `wrangler deploy` using `wrangler.jsonc`. The configured Worker name i
 
 ## GitHub Actions Workflows
 
-These local wrappers inherit their reusable implementations from `cyaris/shared-automation`. Manual `workflow_dispatch` paths delegated to the shared workflows are restricted to the `cyaris` GitHub actor by default.
+These local wrappers inherit their reusable implementations from `cyaris/shared-automation`. Shared workflow behavior,
+inputs, and secrets are documented in the
+[shared-automation workflow reference](https://github.com/cyaris/shared-automation#workflows).
 
 This repository keeps a `dev` branch open for active development. `.github/workflows/auto-create-dev-pr.yml` is a thin
-wrapper around `cyaris/shared-automation/.github/workflows/auto-create-dev-pr.yml@main`; after changes are pushed to
-`dev`, the shared workflow opens a pull request back to the default branch when one does not already exist.
+wrapper around the
+[shared auto-create dev PR workflow](https://github.com/cyaris/shared-automation#githubworkflowsauto-create-dev-pryml);
+after changes are pushed to `dev`, the shared workflow opens a pull request back to the default branch when one does not
+already exist.
 
 ## Production Checklist
 
