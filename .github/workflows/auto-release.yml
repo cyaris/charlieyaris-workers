@@ -1,0 +1,48 @@
+name: Auto release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-sha:
+        description: Commit SHA to reconcile releases through. Blank uses the default branch tip.
+        required: false
+        type: string
+        default: ""
+      pr-number:
+        description: Pull request number to comment on.
+        required: false
+        type: string
+        default: ""
+      shared-automation-ref:
+        description: shared-automation ref used to run the shared release workflow.
+        required: false
+        type: string
+        default: ""
+      publish:
+        description: Publish selected release changes instead of reporting only.
+        required: false
+        type: boolean
+        default: false
+      update-existing:
+        description: Update existing release titles and notes.
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  auto-release:
+    uses: cyaris/shared-automation/.github/workflows/auto-release.yml@main
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    with:
+      pr-number: ${{ github.event.inputs['pr-number'] }}
+      release-sha: ${{ github.event.inputs['release-sha'] }}
+      shared-automation-ref: ${{ github.event.inputs['shared-automation-ref'] }}
+      publish: ${{ github.event.inputs.publish == 'true' }}
+      update-existing: ${{ github.event.inputs['update-existing'] != 'false' }}
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      CHECKOUT_TOKEN: ${{ secrets.CHECKOUT_TOKEN }}
