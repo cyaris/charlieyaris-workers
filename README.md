@@ -124,6 +124,11 @@ already exist.
 to report-only reconciliation with `publish=false`; release creation or existing-release updates still require reviewing
 the generated plan and explicitly enabling publication for an approved run.
 
+`.github/workflows/release-please.yml` runs on pushes to `main` and manual dispatches by `cyaris`, using
+`release-please-config.json` and `.release-please-manifest.json` for future releases. Historical reconciliation is
+complete through `1a61c926d9e2a08009bec1c7b5182be7fbd3450c`; `auto-release.yml` remains available for manual historical
+repair, while Release Please manages later commits.
+
 ## Production Checklist
 
 Before deploying, verify:
