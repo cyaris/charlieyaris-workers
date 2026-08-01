@@ -6,11 +6,11 @@ The Worker accepts contact-form `POST` requests from the allowed site origins, v
 
 ## Project Layout
 
-| Path | Purpose |
-| --- | --- |
-| `src/index.js` | Worker entrypoint and contact-form handler |
-| `test/index.spec.js` | Vitest test file |
-| `wrangler.jsonc` | Cloudflare Worker configuration |
+| Path                 | Purpose                                    |
+| -------------------- | ------------------------------------------ |
+| `src/index.js`       | Worker entrypoint and contact-form handler |
+| `test/index.spec.js` | Vitest test file                           |
+| `wrangler.jsonc`     | Cloudflare Worker configuration            |
 
 ## Requirements
 
@@ -100,12 +100,12 @@ This runs `wrangler deploy` using `wrangler.jsonc`. The configured Worker name i
 
 ## Useful Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm run deploy` | Deploy to Cloudflare Workers |
-| `npm run dev` | Start local Wrangler dev server |
-| `npm run format` | Format project files |
-| `npm test` | Run Vitest |
+| Command          | Purpose                         |
+| ---------------- | ------------------------------- |
+| `npm run deploy` | Deploy to Cloudflare Workers    |
+| `npm run dev`    | Start local Wrangler dev server |
+| `npm run format` | Format project files            |
+| `npm test`       | Run Vitest                      |
 
 ## GitHub Actions Workflows
 
@@ -126,8 +126,8 @@ the generated plan and explicitly enabling publication for an approved run.
 
 `.github/workflows/release-please.yml` runs on pushes to `main` and manual dispatches by `cyaris`, using
 `release-please-config.json` and `.release-please-manifest.json` for future releases. Historical reconciliation is
-complete through `1a61c926d9e2a08009bec1c7b5182be7fbd3450c`; `auto-release.yml` remains available for manual historical
-repair, while Release Please manages later commits.
+complete through the handoff recorded in `release-please-config.json`; `auto-release.yml` remains available for manual
+historical repair, while Release Please manages later commits.
 
 ## Production Checklist
 
