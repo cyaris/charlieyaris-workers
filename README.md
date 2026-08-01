@@ -107,6 +107,17 @@ This runs `wrangler deploy` using `wrangler.jsonc`. The configured Worker name i
 | `npm run format` | Format project files            |
 | `npm test`       | Run Vitest                      |
 
+## Production Checklist
+
+Before deploying, verify:
+
+- `CONTACT_FROM_EMAIL` uses a Resend-verified sending domain.
+- `CONTACT_TO_EMAIL` points to the destination inbox.
+- `RESEND_API_KEY` is set as a Worker secret.
+- `TURNSTILE_SECRET_KEY` is set as a Worker secret.
+- The production frontend origin is included in `ALLOWED_ORIGINS`.
+- The Turnstile hostname is included in `ALLOWED_TURNSTILE_HOSTNAMES`.
+
 ## GitHub Actions Workflows
 
 These local wrappers inherit their reusable implementations from `cyaris/shared-automation`. Shared workflow behavior,
@@ -128,14 +139,3 @@ the generated plan and explicitly enabling publication for an approved run.
 `release-please-config.json` and `.release-please-manifest.json` for future releases. Historical reconciliation is
 complete through the handoff recorded in `release-please-config.json`; `auto-release.yml` remains available for manual
 historical repair, while Release Please manages later commits.
-
-## Production Checklist
-
-Before deploying, verify:
-
-- `CONTACT_FROM_EMAIL` uses a Resend-verified sending domain.
-- `CONTACT_TO_EMAIL` points to the destination inbox.
-- `RESEND_API_KEY` is set as a Worker secret.
-- `TURNSTILE_SECRET_KEY` is set as a Worker secret.
-- The production frontend origin is included in `ALLOWED_ORIGINS`.
-- The Turnstile hostname is included in `ALLOWED_TURNSTILE_HOSTNAMES`.
