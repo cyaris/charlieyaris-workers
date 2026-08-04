@@ -7,8 +7,8 @@
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
 		"test": "vitest",
-		"format": "prettier --ignore-path .gitignore --ignore-path .prettierignore --write '**/*.{css,cjs,html,js,json,svelte,svg}'",
-		"format:check": "prettier --ignore-path ../.gitignore --ignore-path .prettierignore --check '**/*.{css,cjs,html,js,json,svelte,svg}'"
+		"format": "prettier --ignore-path .gitignore --ignore-path .prettierignore --write '**/*.{css,cjs,html,js,json,jsonc,mjs,svelte,svg}'",
+		"format:check": "prettier --ignore-path .gitignore --ignore-path .prettierignore --check '**/*.{css,cjs,html,js,json,jsonc,mjs,svelte,svg}'"
 	},
 	"overrides": {
 		"undici": "^7.29.0"
