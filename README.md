@@ -90,13 +90,16 @@ Optional: run a deploy dry run first:
 npx wrangler deploy --dry-run
 ```
 
-Deploy the Worker:
+Deploy the Worker locally:
 
 ```bash
 npm run deploy
 ```
 
 This runs `wrangler deploy` using `wrangler.jsonc`. The configured Worker name is `contact-form-worker`, and `workers_dev` is enabled, so Cloudflare will publish it to the account's `workers.dev` subdomain unless routes or custom domains are added to `wrangler.jsonc`.
+
+Pushes to `main` also deploy automatically through `.github/workflows/deploy.yml`; see
+[GitHub Actions Workflows](#github-actions-workflows) for the required repository secret and variable.
 
 ## Useful Commands
 
@@ -134,3 +137,18 @@ already exist.
 [shared auto-release workflow](https://github.com/cyaris/shared-automation#githubworkflowsauto-releaseyml). It defaults
 to report-only reconciliation with `publish=false`; release creation or existing-release updates still require reviewing
 the generated plan and explicitly enabling publication for an approved run.
+
+`.github/workflows/workflow-validation.yml` is a thin wrapper around the
+[shared workflow-validation workflow](https://github.com/cyaris/shared-automation#githubworkflowsworkflow-validationyml)
+and validates this repository's own workflow files with `actionlint` and `zizmor` when they change.
+
+`.github/workflows/deploy.yml` is repository-owned deployment logic, not a shared-automation wrapper. It deploys the
+Worker with [`cloudflare/wrangler-action`](https://github.com/cloudflare/wrangler-action) on every push to `main`, and
+supports manual `workflow_dispatch` restricted to the `cyaris` actor. It requires:
+
+- A `CLOUDFLARE_API_TOKEN` repository secret with permission to edit this Worker.
+- A `CLOUDFLARE_ACCOUNT_ID` repository variable.
+
+The workflow fails clearly if either is missing rather than silently skipping the deploy. This workflow only runs
+`wrangler deploy`; it does not create the `RESEND_API_KEY` or `TURNSTILE_SECRET_KEY` Worker secrets described in
+[Deploy](#deploy), which are configured directly against the Cloudflare account and persist across deploys.
