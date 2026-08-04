@@ -10,10 +10,13 @@
 		"format": "prettier --ignore-path .gitignore --ignore-path .prettierignore --write '**/*.{css,cjs,html,js,json,svelte,svg}'",
 		"format:check": "prettier --ignore-path ../.gitignore --ignore-path .prettierignore --check '**/*.{css,cjs,html,js,json,svelte,svg}'"
 	},
+	"overrides": {
+		"undici": "^7.29.0"
+	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.12.4",
-		"vitest": "~3.2.0",
-		"wrangler": "^4.110.0",
-		"prettier": "^3.6.2"
+		"@cloudflare/vitest-pool-workers": "^0.20.1",
+		"prettier": "^3.9.6",
+		"vitest": "^4.1.10",
+		"wrangler": "^4.118.0"
 	}
 }
