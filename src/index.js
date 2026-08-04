@@ -32,6 +32,8 @@ const escapeHtml = (value) =>
 
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+const asText = (value) => (typeof value === 'string' ? value : '');
+
 async function verifyTurnstile(token, ip, secretKey) {
 	if (!secretKey) {
 		return { success: false, hostname: '', errorCodes: ['missing-secret-key'] };
@@ -120,11 +122,11 @@ export default {
 			return jsonResponse({ success: true, message: 'Your message has been sent.' }, 200, origin);
 		}
 
-		const trimmedName = String(name).trim();
-		const trimmedEmail = String(email).trim();
-		const trimmedSubject = String(subject).trim();
-		const trimmedMessage = String(message).trim();
-		const trimmedTurnstileToken = String(turnstileToken).trim();
+		const trimmedName = asText(name).trim();
+		const trimmedEmail = asText(email).trim();
+		const trimmedSubject = asText(subject).trim();
+		const trimmedMessage = asText(message).trim();
+		const trimmedTurnstileToken = asText(turnstileToken).trim();
 
 		if (!trimmedName || !trimmedEmail || !trimmedSubject || !trimmedMessage) {
 			return jsonResponse({ error: 'Please complete every required field.' }, 400, origin);
