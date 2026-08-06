@@ -7,18 +7,16 @@
 	"name": "contact-form-worker",
 	"main": "src/index.js",
 	"compatibility_date": "2026-07-10",
-        "vars": {
-            "CONTACT_FROM_EMAIL": "Website Contact <contact@mail.charlieyaris.com>",
-            "CONTACT_TO_EMAIL": "charlieyaris@gmail.com"
-        },
+	"vars": {
+		"CONTACT_FROM_EMAIL": "Website Contact <contact@mail.charlieyaris.com>",
+		"CONTACT_TO_EMAIL": "charlieyaris@gmail.com",
+	},
 	"observability": {
-		"enabled": true
+		"enabled": true,
 	},
 	"upload_source_maps": true,
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
-        "workers_dev": true,
+	"compatibility_flags": ["nodejs_compat"],
+	"workers_dev": true,
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

@@ -1,0 +1,21 @@
+name: Workflow validation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/**"
+      - "renovate.json"
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "renovate.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  workflow-validation:
+    uses: cyaris/shared-automation/.github/workflows/workflow-validation.yml@main
