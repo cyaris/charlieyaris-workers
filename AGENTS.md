@@ -77,6 +77,10 @@ If the application uses Durable Objects or Workflows, refer to the relevant best
 - Durable Objects: https://developers.cloudflare.com/durable-objects/best-practices/rules-of-durable-objects/
 - Workflows: https://developers.cloudflare.com/workflows/build/rules-of-workflows/
 
+## JavaScript
+
+- Follow the JavaScript-relevant guidance from `../svelte-lib/AGENTS.md` for source, test, and config JavaScript in this repository, including `.js` and `.mjs` files and JavaScript embedded within HTML files, covering import placement, formatting preferences, dependency ownership, and small-variable cleanup preferences. This repository's own `.prettierrc` and any other repo-local JavaScript rules in this file override sibling `svelte-lib` guidance when they conflict, such as this repo's tab indentation and 140-character print width. Treat Svelte-component, embedded-app, package-export, and library-release rules from that file as inapplicable, since this repository is a plain Cloudflare Worker with no Svelte or shared-library code.
+
 ## GitHub Actions
 
 - Use `../shared-automation/AGENTS.md` as the source of truth for shared GitHub Actions, reusable workflow wrapper,
