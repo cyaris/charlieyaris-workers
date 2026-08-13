@@ -1,0 +1,122 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+inheritance: true
+language: 'en-US'
+
+reviews:
+  profile: 'chill'
+
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: false
+  review_details: false
+  commit_status: true
+  fail_commit_status: true
+
+  # Automatic reviews are off; the coderabbit-pr-review skill triggers reviews on demand via @coderabbitai.
+  auto_review:
+    enabled: false
+    drafts: false
+    auto_incremental_review: true
+    auto_pause_after_reviewed_commits: 0
+    ignore_title_keywords:
+      - 'WIP'
+      - '[skip review]'
+
+  path_filters:
+    - '!**/.DS_Store'
+    - '!**/.wrangler/**'
+    - '!**/coverage/**'
+    - '!**/node_modules/**'
+
+  path_instructions:
+    - path: '**/*'
+      instructions: |
+        Focus on changes introduced by the pull request.
+
+        Prioritize:
+        - Incorrect behavior and likely runtime bugs
+        - Security vulnerabilities
+        - Contact-form availability and delivery regressions
+        - Backward compatibility with the charlieyaris.com frontend
+        - Meaningful performance problems
+        - Unnecessary complexity
+        - Missing error handling
+        - Missing tests for important behavior
+
+        For each issue:
+        - Describe a concrete failure scenario.
+        - Explain why the issue matters.
+        - Recommend a specific correction.
+        - Distinguish blocking problems from optional improvements.
+
+        Avoid:
+        - Minor formatting comments
+        - Subjective naming preferences
+        - Suggestions already handled by formatters or linters
+        - Large refactors unrelated to the pull request
+        - Repeating the same concern in multiple comments
+
+    - path: 'src/**/*.js'
+      instructions: |
+        Check for:
+        - Cloudflare Workers runtime or Web API compatibility problems
+        - CORS behavior that rejects an allowed origin or permits an untrusted origin
+        - Request parsing, type normalization, validation, or length-limit bypasses
+        - HTML, email-header, log, or response-data injection
+        - Turnstile verification that accepts failed responses, unexpected hostnames, or missing secrets
+        - Resend requests with incorrect recipients, sender fields, reply-to behavior, or error handling
+        - Changes that expose API keys, Turnstile tokens, message contents, email addresses, or other sensitive data
+        - Missing Worker bindings or external-service failures that return misleading success responses
+        - Confirmation-email failures that incorrectly make an already delivered contact message appear unsuccessful
+        - Network requests, promises, or execution-context work that can be dropped before completion
+
+    - path: 'test/**/*.js'
+      instructions: |
+        Check for:
+        - Missing coverage for request methods, CORS, malformed payloads, field limits, and non-string values
+        - Missing Turnstile, Resend, binding, or network-failure cases
+        - Assertions that depend on outbound-call order without verifying the endpoint
+        - Mocks that diverge from Cloudflare Workers runtime behavior
+        - Tests that leak stubbed globals or execution-context work into later cases
+        - Success-path assertions that do not verify both contact and confirmation email behavior
+
+    - path: 'wrangler.jsonc'
+      instructions: |
+        Check for:
+        - Secrets committed as plain-text variables
+        - Missing or renamed bindings that no longer match src/index.js, tests, README.md, or deployment configuration
+        - Worker name, compatibility date, compatibility flag, observability, source-map, or workers.dev changes with unintended production effects
+        - Configuration that breaks local development or differs unexpectedly from production
+
+    - path: '{package.json,package-lock.json,vitest.config.mjs,.prettierrc}'
+      instructions: |
+        Check for:
+        - Wrangler, Vitest, or Cloudflare Workers test-pool version incompatibilities
+        - Package-lock changes that do not match package.json
+        - Scripts or formatting settings that no longer match README.md or CI behavior
+        - Dependency changes that add avoidable runtime code to this dependency-free Worker
+
+    - path: '**/.github/workflows/*.{yml,yaml}'
+      instructions: |
+        Check for:
+        - Invalid GitHub Actions syntax
+        - Excessive permissions
+        - Unsafe use of pull_request_target
+        - Unpinned third-party actions
+        - Incorrect branch or path filters
+        - Manual dispatches that bypass the cyaris actor restriction
+        - Missing required-credential validation or failures hidden as successful or skipped jobs
+        - Cloudflare credentials or other secrets exposed to logs or untrusted code
+        - Wrangler versions that drift from package-lock.json
+        - Thin workflow callers that drift from shared-automation contracts
+
+    - path: '**/*.{md,markdown}'
+      instructions: |
+        Check for:
+        - Development, test, deployment, secret, binding, and workflow documentation that no longer matches the repository
+        - Links that should use standard Markdown by default or rel="noopener noreferrer" when intentionally opened in a new tab
+        - Documentation that conflicts with AGENTS.md, Worker behavior, or shared-automation contracts
+        - Migration notes, deprecated options, historical caveats, or maintainer instructions that do not belong in README.md
+
+chat:
+  auto_reply: true
