@@ -10,11 +10,11 @@ For contact-form `POST` requests from allowed site origins, the Worker:
 
 ## Project Layout
 
-|Path|Purpose|
-|---|---|
-|`src/index.js`|Worker entrypoint and contact-form handler|
-|`test/index.spec.js`|Vitest test file|
-|`wrangler.jsonc`|Cloudflare Worker configuration|
+| Path | Purpose |
+| --- | --- |
+| `src/index.js` | Worker entrypoint and contact-form handler |
+| `test/index.spec.js` | Vitest test file |
+| `wrangler.jsonc` | Cloudflare Worker configuration |
 
 ## Requirements
 
@@ -109,12 +109,12 @@ Pushes to `main` also deploy automatically through `.github/workflows/deploy.yml
 
 ## Useful Commands
 
-|Command|Purpose|
-|---|---|
-|`npm run deploy`|Deploy to Cloudflare Workers|
-|`npm run dev`|Start local Wrangler dev server|
-|`npm run format`|Format project files|
-|`npm test`|Run Vitest|
+| Command | Purpose |
+| --- | --- |
+| `npm run deploy` | Deploy to Cloudflare Workers |
+| `npm run dev` | Start local Wrangler dev server |
+| `npm run format` | Format project files |
+| `npm test` | Run Vitest |
 
 ## Production Checklist
 
