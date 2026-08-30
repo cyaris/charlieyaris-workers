@@ -2,7 +2,11 @@
 
 Cloudflare Worker for the `charlieyaris.com` contact form.
 
-The Worker accepts contact-form `POST` requests from the allowed site origins, validates the Turnstile token, sends the message through Resend, and sends a best-effort confirmation email back to the visitor.
+For contact-form `POST` requests from allowed site origins, the Worker:
+
+- validates the Turnstile token
+- sends the message through Resend
+- attempts a confirmation email to the visitor
 
 ## Project Layout
 
@@ -27,14 +31,14 @@ npm install
 
 ## Configuration
 
-The Worker name and public variables are configured in `wrangler.jsonc`.
+`wrangler.jsonc` configures the Worker name and public variables.
 
 Current production variables:
 
 - `CONTACT_FROM_EMAIL` - sender address shown on outgoing emails
 - `CONTACT_TO_EMAIL` - inbox that receives contact-form messages
 
-Sensitive values must be configured as Worker secrets:
+Configure sensitive values as Worker secrets:
 
 - `RESEND_API_KEY`
 - `TURNSTILE_SECRET_KEY`
@@ -96,7 +100,9 @@ Deploy the Worker locally:
 npm run deploy
 ```
 
-This runs `wrangler deploy` using `wrangler.jsonc`. The configured Worker name is `contact-form-worker`, and `workers_dev` is enabled, so Cloudflare will publish it to the account's `workers.dev` subdomain unless routes or custom domains are added to `wrangler.jsonc`.
+This runs `wrangler deploy` using `wrangler.jsonc`. The configuration names the Worker `contact-form-worker` and sets
+`workers_dev` to `true`, so Cloudflare publishes it to the account's `workers.dev` subdomain. Adding routes or a custom
+domain does not disable that endpoint while `workers_dev` is `true`; set `workers_dev` to `false` to remove it.
 
 Pushes to `main` also deploy automatically through `.github/workflows/deploy.yml`; see
 [GitHub Actions Workflows](#github-actions-workflows) for the required repository secret and variable.
@@ -123,9 +129,9 @@ Before deploying, verify:
 
 ## GitHub Actions Workflows
 
-These local wrappers inherit their reusable implementations from `cyaris/shared-automation`. Shared workflow behavior,
-inputs, and secrets are documented in the
-[shared-automation workflow reference](https://github.com/cyaris/shared-automation#workflows).
+These local wrappers inherit their reusable implementations from `cyaris/shared-automation`. The
+[shared-automation workflow reference](https://github.com/cyaris/shared-automation#workflows) documents shared
+behavior, inputs, and secrets.
 
 This repository keeps a `dev` branch open for active development. `.github/workflows/auto-create-dev-pr.yml` is a thin
 wrapper around the
@@ -151,4 +157,4 @@ supports manual `workflow_dispatch` restricted to the `cyaris` actor. It require
 
 The workflow fails clearly if either is missing rather than silently skipping the deploy. This workflow only runs
 `wrangler deploy`; it does not create the `RESEND_API_KEY` or `TURNSTILE_SECRET_KEY` Worker secrets described in
-[Deploy](#deploy), which are configured directly against the Cloudflare account and persist across deploys.
+[Deploy](#deploy). Configure those secrets directly in the Cloudflare account; they persist across deploys.

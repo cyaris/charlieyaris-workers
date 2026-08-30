@@ -1,5 +1,6 @@
 import { createExecutionContext, waitOnExecutionContext } from 'cloudflare:test';
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import worker from '../src';
 
 const ALLOWED_ORIGIN = 'https://charlieyaris.com';
