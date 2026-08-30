@@ -37,7 +37,7 @@ Run `wrangler types` after changing bindings in `wrangler.jsonc`.
 
 ## JavaScript
 
-- Follow the JavaScript-relevant formatting, dependency-ownership, and single-use guidance from
-  `../svelte-lib/AGENTS.md` for source, test, and config JavaScript, including `.js`, `.mjs`, and JavaScript embedded in
-  HTML. Repository-local rules override that sibling guidance, including tab indentation and the 140-character print
-  width. Svelte component, embedded-app, package-export, and library-release rules do not apply to this plain Worker.
+Follow the JavaScript-relevant formatting, dependency-ownership, and single-use guidance from `../svelte-lib/AGENTS.md`
+for source, test, and config JavaScript, including `.js`, `.mjs`, and JavaScript embedded in HTML. Repository-local rules
+override that sibling guidance, including tab indentation and the 140-character print width. Svelte component,
+embedded-app, package-export, and library-release rules do not apply to this plain Worker.

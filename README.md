@@ -100,9 +100,9 @@ Deploy the Worker locally:
 npm run deploy
 ```
 
-This runs `wrangler deploy` using `wrangler.jsonc`. The configuration names the Worker `contact-form-worker` and
-enables `workers_dev`, so Cloudflare publishes it to the account's `workers.dev` subdomain unless `wrangler.jsonc` adds
-routes or custom domains.
+This runs `wrangler deploy` using `wrangler.jsonc`. The configuration names the Worker `contact-form-worker` and sets
+`workers_dev` to `true`, so Cloudflare publishes it to the account's `workers.dev` subdomain. Adding routes or a custom
+domain does not disable that endpoint while `workers_dev` is `true`; set `workers_dev` to `false` to remove it.
 
 Pushes to `main` also deploy automatically through `.github/workflows/deploy.yml`; see
 [GitHub Actions Workflows](#github-actions-workflows) for the required repository secret and variable.
