@@ -148,9 +148,13 @@ the generated plan and explicitly enabling publication for an approved run.
 [shared workflow-validation workflow](https://github.com/cyaris/shared-automation#githubworkflowsworkflow-validationyml)
 and validates this repository's own workflow files with `actionlint` and `zizmor` when they change.
 
+`.github/workflows/ci.yml` runs `npm test` and `npm run format:check` on pushes to `dev` and `main`, and supports manual
+dispatch. The repository has no build, type-check, or lint script, so those shared CI steps are explicitly disabled.
+
 `.github/workflows/deploy.yml` is repository-owned deployment logic, not a shared-automation wrapper. It deploys the
 Worker with [`cloudflare/wrangler-action`](https://github.com/cloudflare/wrangler-action) on every push to `main`, and
-supports manual `workflow_dispatch` restricted to the `cyaris` actor. It requires:
+supports manual `workflow_dispatch` restricted to the `cyaris` actor. Tests and formatting must pass in the deployment
+workflow before Wrangler runs. It requires:
 
 - A `CLOUDFLARE_API_TOKEN` repository secret with permission to edit this Worker.
 - A `CLOUDFLARE_ACCOUNT_ID` repository variable.
@@ -158,3 +162,7 @@ supports manual `workflow_dispatch` restricted to the `cyaris` actor. It require
 The workflow fails clearly if either is missing rather than silently skipping the deploy. This workflow only runs
 `wrangler deploy`; it does not create the `RESEND_API_KEY` or `TURNSTILE_SECRET_KEY` Worker secrets described in
 [Deploy](#deploy). Configure those secrets directly in the Cloudflare account; they persist across deploys.
+
+First-party reusable workflow references intentionally track `cyaris/shared-automation@main`. This repository and the
+shared workflow repository have the same owner, so following the production branch keeps fixes current without granting
+an external maintainer control over CI or deployment code.

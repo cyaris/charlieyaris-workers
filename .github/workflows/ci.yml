@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  node-package-ci:
+    uses: cyaris/shared-automation/.github/workflows/ci.yml@main
+    with:
+      run-build: false
+      run-check: false
+      run-lint: false
+      run-test: true
