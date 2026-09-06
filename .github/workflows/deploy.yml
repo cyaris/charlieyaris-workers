@@ -10,6 +10,14 @@ permissions:
   contents: read
 
 jobs:
+  node-package-ci:
+    uses: cyaris/shared-automation/.github/workflows/ci.yml@main
+    with:
+      run-build: false
+      run-check: false
+      run-lint: false
+      run-test: true
+
   validate-manual-dispatch:
     if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
@@ -26,6 +34,7 @@ jobs:
 
   deploy:
     needs:
+      - node-package-ci
       - validate-manual-dispatch
     if: ${{ !failure() && !cancelled() }}
     runs-on: ubuntu-latest
