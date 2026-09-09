@@ -35,6 +35,21 @@ If the application uses Durable Objects or Workflows, also retrieve their curren
 
 Run `wrangler types` after changing bindings in `wrangler.jsonc`.
 
+## Contact Worker Isolation
+
+- Keep `contact-form-worker` for Charlie Yaris and `fantasy-playtime-contact-worker` for Fantasy Playtime as separate
+  deployments with separate entrypoints, Wrangler files, sender identities, Turnstile widgets, and secrets. Shared
+  validation, CORS, Turnstile, escaping, and Resend behavior belongs in `src/contact.js`.
+- Keep Fantasy Playtime's production endpoint at `https://contact-api.fantasyplaytime.com` and its production CORS and
+  Turnstile hostname allowlists restricted to the frontend hostnames that are actually served. Never use wildcard
+  production CORS or admit development origins in production.
+- Treat Turnstile site keys as public frontend configuration. Treat Turnstile secrets and Resend API keys as private
+  Worker secrets: never commit, print, log, fixture, or place them in Wrangler variables. Fantasy Playtime uses
+  `TURNSTILE_SECRET` and an independently scoped `RESEND_API_KEY`; Charlie Yaris retains its existing binding names.
+- Verify Turnstile server-side before sending mail, safely validate and escape user-provided content, and keep provider
+  responses, secrets, and stack traces out of client responses and logs. Official Turnstile test credentials and local
+  origins must never reach production configuration.
+
 ## JavaScript
 
 Follow the JavaScript-relevant formatting, dependency-ownership, and single-use guidance from `../svelte-lib/AGENTS.md`
