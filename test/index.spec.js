@@ -126,6 +126,29 @@ describe('shared contact worker behavior', () => {
 		},
 	);
 
+	it('admits local origins and Turnstile hostnames only when CONTACT_ENVIRONMENT is development', async () => {
+		const productionEnv = { ...charlieEnv, CONTACT_ENVIRONMENT: 'production' };
+		const developmentEnv = { ...charlieEnv, CONTACT_ENVIRONMENT: 'development' };
+
+		for (const localOrigin of ['http://localhost:4000', 'http://127.0.0.1:4000']) {
+			const rejected = await fetchCharlie(postRequest(validPayload(), { origin: localOrigin }), productionEnv);
+
+			expect(rejected.status, localOrigin).toBe(403);
+
+			mockOutboundFetch({ turnstileHostname: 'localhost' });
+			const accepted = await fetchCharlie(postRequest(validPayload(), { origin: localOrigin }), developmentEnv);
+
+			expect(accepted.status, localOrigin).toBe(200);
+			vi.unstubAllGlobals();
+		}
+
+		// A production token solved against a locally served widget must not pass the hostname allowlist.
+		mockOutboundFetch({ turnstileHostname: 'localhost' });
+		const localHostnameInProduction = await fetchCharlie(postRequest(validPayload()), productionEnv);
+
+		expect(localHostnameInProduction.status).toBe(403);
+	});
+
 	it('rejects non-JSON, malformed JSON, and oversized request bodies', async () => {
 		const nonJson = await fetchCharlie(
 			new Request('https://contact-worker.example/', {

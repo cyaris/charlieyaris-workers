@@ -16,6 +16,7 @@ For contact-form `POST` requests from allowed site origins, the Worker:
 | `src/fantasy-playtime.js` | Fantasy Playtime product configuration and entrypoint |
 | `src/index.js` | Charlie Yaris product configuration and entrypoint |
 | `test/index.spec.js` | Vitest test file |
+| `wrangler.dev.jsonc` | Local-only Charlie Yaris Worker configuration |
 | `wrangler.fantasy-playtime.dev.jsonc` | Local-only Fantasy Playtime Worker configuration |
 | `wrangler.fantasy-playtime.jsonc` | Fantasy Playtime production deployment configuration |
 | `wrangler.jsonc` | Charlie Yaris production deployment configuration |
@@ -63,7 +64,7 @@ Do not commit `.dev.vars` or `.env` files.
 
 ## Local Development
 
-Start the Charlie Yaris Worker locally:
+Start the Charlie Yaris Worker locally with its separate development configuration:
 
 ```bash
 npm run dev
@@ -77,9 +78,16 @@ Start the Fantasy Playtime Worker locally with its separate development configur
 npm run dev:fantasy-playtime
 ```
 
-The Fantasy development configuration admits only `http://localhost:3000` and `http://127.0.0.1:3000`, matching the
-app's Vite server. Production ignores those origins and accepts only `https://fantasyplaytime.com`. Automated tests mock
-Turnstile and Resend and never send real email.
+Each Worker admits local origins and local Turnstile hostnames only when its Wrangler configuration sets
+`CONTACT_ENVIRONMENT` to `development`:
+
+| Worker | Development origins | Production origins |
+| --- | --- | --- |
+| Charlie Yaris | `http://127.0.0.1:4000` and `http://localhost:4000` | `https://charlieyaris.com`, `https://www.charlieyaris.com`, and `https://cyaris.github.io` |
+| Fantasy Playtime | `http://127.0.0.1:3000` and `http://localhost:3000`, matching the app's Vite server | `https://fantasyplaytime.com` |
+
+Both production configurations set `CONTACT_ENVIRONMENT` to `production`, so a token solved against a locally served
+Turnstile widget fails the hostname allowlist. Automated tests mock Turnstile and Resend and never send real email.
 
 ## Deploy
 
