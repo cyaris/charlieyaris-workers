@@ -43,9 +43,11 @@ Run `wrangler types` after changing bindings in `wrangler.jsonc`.
 - Keep Fantasy Playtime's production endpoint at `https://contact-api.fantasyplaytime.com` and its production CORS and
   Turnstile hostname allowlists restricted to the frontend hostnames that are actually served. Never use wildcard
   production CORS or admit development origins in production.
-- Treat Turnstile site keys as public frontend configuration. Treat Turnstile secrets and Resend API keys as private
-  Worker secrets: never commit, print, log, fixture, or place them in Wrangler variables. Fantasy Playtime uses
-  `TURNSTILE_SECRET` and an independently scoped `RESEND_API_KEY`; Charlie Yaris retains its existing binding names.
+- Treat Turnstile site keys as public frontend configuration. Treat real Turnstile secrets and Resend API keys as private
+  Worker secrets: never commit, print, log, fixture, or place them in Wrangler variables. Cloudflare's official Turnstile
+  test secrets are the one exception and may appear in local-development fixtures such as `.dev.vars.example`. Fantasy
+  Playtime uses `TURNSTILE_SECRET` and an independently scoped `RESEND_API_KEY`; Charlie Yaris retains its existing
+  binding names.
 - Verify Turnstile server-side before sending mail, safely validate and escape user-provided content, and keep provider
   responses, secrets, and stack traces out of client responses and logs. Official Turnstile test credentials and local
   origins must never reach production configuration.

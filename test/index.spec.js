@@ -114,14 +114,17 @@ describe('shared contact worker behavior', () => {
 		expect(originResponse.status).toBe(403);
 	});
 
-	it('fails clearly when required bindings are missing', async () => {
-		const response = await fetchCharlie(postRequest(validPayload()), { ...charlieEnv, RESEND_API_KEY: undefined });
+	it.each(['CONTACT_FROM_EMAIL', 'CONTACT_TO_EMAIL', 'RESEND_API_KEY', 'TURNSTILE_SECRET_KEY'])(
+		'fails clearly when the %s binding is missing',
+		async (binding) => {
+			const response = await fetchCharlie(postRequest(validPayload()), { ...charlieEnv, [binding]: undefined });
 
-		expect(response.status).toBe(500);
-		expect(await response.json()).toEqual({
-			error: 'The contact service is temporarily unavailable. Please try again later.',
-		});
-	});
+			expect(response.status).toBe(500);
+			expect(await response.json()).toEqual({
+				error: 'The contact service is temporarily unavailable. Please try again later.',
+			});
+		},
+	);
 
 	it('rejects non-JSON, malformed JSON, and oversized request bodies', async () => {
 		const nonJson = await fetchCharlie(

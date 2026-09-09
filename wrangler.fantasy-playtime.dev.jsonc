@@ -14,5 +14,5 @@
 		"head_sampling_rate": 1,
 	},
 	"upload_source_maps": true,
-	"workers_dev": true,
+	"workers_dev": false,
 }
