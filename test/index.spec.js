@@ -138,10 +138,16 @@ describe('shared contact worker behavior', () => {
 
 			expect(rejected.status, localOrigin).toBe(403);
 
-			mockOutboundFetch({ turnstileHostname: localHostname });
+			const developmentCalls = mockOutboundFetch({ turnstileHostname: localHostname });
 			const accepted = await fetchCharlie(postRequest(validPayload(), { origin: localOrigin }), developmentEnv);
+			const [contactEmail, confirmationEmail] = developmentCalls
+				.filter((call) => call.url.includes('api.resend.com'))
+				.map((call) => JSON.parse(call.init.body));
 
 			expect(accepted.status, localOrigin).toBe(200);
+			expect(accepted.headers.get('Access-Control-Allow-Origin'), localOrigin).toBe(localOrigin);
+			expect(contactEmail.to, localOrigin).toEqual([charlieEnv.CONTACT_TO_EMAIL]);
+			expect(confirmationEmail.to, localOrigin).toEqual(['ada@example.com']);
 			vi.unstubAllGlobals();
 
 			// A production token solved against a locally served widget must not pass the hostname allowlist.
