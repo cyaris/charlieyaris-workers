@@ -130,23 +130,33 @@ describe('shared contact worker behavior', () => {
 		const productionEnv = { ...charlieEnv, CONTACT_ENVIRONMENT: 'production' };
 		const developmentEnv = { ...charlieEnv, CONTACT_ENVIRONMENT: 'development' };
 
-		for (const localOrigin of ['http://localhost:4000', 'http://127.0.0.1:4000']) {
+		for (const [localOrigin, localHostname] of [
+			['http://127.0.0.1:4000', '127.0.0.1'],
+			['http://localhost:4000', 'localhost'],
+		]) {
 			const rejected = await fetchCharlie(postRequest(validPayload(), { origin: localOrigin }), productionEnv);
 
 			expect(rejected.status, localOrigin).toBe(403);
 
-			mockOutboundFetch({ turnstileHostname: 'localhost' });
+			const developmentCalls = mockOutboundFetch({ turnstileHostname: localHostname });
 			const accepted = await fetchCharlie(postRequest(validPayload(), { origin: localOrigin }), developmentEnv);
+			const [contactEmail, confirmationEmail] = developmentCalls
+				.filter((call) => call.url.includes('api.resend.com'))
+				.map((call) => JSON.parse(call.init.body));
 
 			expect(accepted.status, localOrigin).toBe(200);
+			expect(accepted.headers.get('Access-Control-Allow-Origin'), localOrigin).toBe(localOrigin);
+			expect(contactEmail.to, localOrigin).toEqual([charlieEnv.CONTACT_TO_EMAIL]);
+			expect(confirmationEmail.to, localOrigin).toEqual(['ada@example.com']);
+			vi.unstubAllGlobals();
+
+			// A production token solved against a locally served widget must not pass the hostname allowlist.
+			mockOutboundFetch({ turnstileHostname: localHostname });
+			const localHostnameInProduction = await fetchCharlie(postRequest(validPayload()), productionEnv);
+
+			expect(localHostnameInProduction.status, localHostname).toBe(403);
 			vi.unstubAllGlobals();
 		}
-
-		// A production token solved against a locally served widget must not pass the hostname allowlist.
-		mockOutboundFetch({ turnstileHostname: 'localhost' });
-		const localHostnameInProduction = await fetchCharlie(postRequest(validPayload()), productionEnv);
-
-		expect(localHostnameInProduction.status).toBe(403);
 	});
 
 	it('rejects non-JSON, malformed JSON, and oversized request bodies', async () => {
