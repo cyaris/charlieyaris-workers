@@ -4,8 +4,10 @@
 	"private": true,
 	"scripts": {
 		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
+		"deploy:fantasy-playtime": "wrangler deploy --config wrangler.fantasy-playtime.jsonc",
+		"dev": "wrangler dev --config wrangler.dev.jsonc",
+		"dev:fantasy-playtime": "wrangler dev --config wrangler.fantasy-playtime.dev.jsonc",
+		"start": "wrangler dev --config wrangler.dev.jsonc",
 		"test": "vitest",
 		"format": "prettier --ignore-path .gitignore --ignore-path .prettierignore --write '**/*.{css,cjs,html,js,json,jsonc,mjs,svelte,svg}'",
 		"format:check": "prettier --ignore-path .gitignore --ignore-path .prettierignore --check '**/*.{css,cjs,html,js,json,jsonc,mjs,svelte,svg}'"

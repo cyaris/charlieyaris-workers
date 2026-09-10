@@ -1,0 +1,18 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "fantasy-playtime-contact-worker-local",
+	"main": "src/fantasy-playtime.js",
+	"compatibility_date": "2026-09-09",
+	"compatibility_flags": ["nodejs_compat"],
+	"vars": {
+		"CONTACT_ENVIRONMENT": "development",
+		"CONTACT_FROM_EMAIL": "Fantasy Playtime <contact@fantasyplaytime.com>",
+		"CONTACT_TO_EMAIL": "charlieyaris@gmail.com",
+	},
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+	},
+	"upload_source_maps": true,
+	"workers_dev": false,
+}
