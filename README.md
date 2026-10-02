@@ -186,7 +186,8 @@ This repository keeps a `dev` branch open for active development. `.github/workf
 wrapper around the
 [shared auto-create dev PR workflow](https://github.com/cyaris/shared-automation#githubworkflowsauto-create-dev-pryml);
 after changes are pushed to `dev`, the shared workflow opens a pull request back to the default branch when one does not
-already exist.
+already exist. The wrapper also runs on pushes to `main` and on manual dispatch, and skips `dev` pushes while the
+`DEV_PR_OPEN` repository variable is `true`.
 
 `.github/workflows/auto-release.yml` is a manual-only wrapper around the
 [shared auto-release workflow](https://github.com/cyaris/shared-automation#githubworkflowsauto-releaseyml). It defaults
