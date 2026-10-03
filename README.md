@@ -186,7 +186,8 @@ This repository keeps a `dev` branch open for active development. `.github/workf
 wrapper around the
 [shared auto-create dev PR workflow](https://github.com/cyaris/shared-automation#githubworkflowsauto-create-dev-pryml);
 after changes are pushed to `dev`, the shared workflow opens a pull request back to the default branch when one does not
-already exist.
+already exist. The wrapper also runs on pushes to `main` and on manual dispatch, and skips `dev` pushes while the
+`DEV_PR_OPEN` repository variable is `true`.
 
 `.github/workflows/auto-release.yml` is a manual-only wrapper around the
 [shared auto-release workflow](https://github.com/cyaris/shared-automation#githubworkflowsauto-releaseyml). It defaults
@@ -197,7 +198,7 @@ the generated plan and explicitly enabling publication for an approved run.
 [shared workflow-validation workflow](https://github.com/cyaris/shared-automation#githubworkflowsworkflow-validationyml)
 and validates this repository's own workflow files with `actionlint` and `zizmor` when they change.
 
-`.github/workflows/ci.yml` runs `npm test` and `npm run format:check` on pushes to `dev` and `main`, and supports manual
+`.github/workflows/ci.yml` runs `npm test` and `npm run format:check` on pushes to `main`, and supports manual
 dispatch. The repository has no build, type-check, or lint script, so those shared CI steps are explicitly disabled.
 
 `.github/workflows/deploy.yml` is repository-owned deployment logic, not a shared-automation wrapper. It deploys only
