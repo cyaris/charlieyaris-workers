@@ -3,11 +3,6 @@
 STOP. Your knowledge of Cloudflare Workers APIs and limits may be outdated. Retrieve current documentation before any
 Workers, KV, R2, D1, Durable Objects, Queues, Vectorize, Workers AI, or Agents SDK task.
 
-## Shared Conventions
-
-- Inherit README and Markdown style, GitHub Actions, reusable workflow, pull-request review, workflow failure, commit,
-  and release-management rules from `../shared-automation/AGENTS.md`.
-
 ## Current Documentation
 
 - Workers: https://developers.cloudflare.com/workers/
@@ -27,11 +22,11 @@ If the application uses Durable Objects or Workflows, also retrieve their curren
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npx wrangler dev` | Local development |
-| `npx wrangler deploy` | Deploy to Cloudflare |
-| `npx wrangler types` | Generate TypeScript types |
+Command | Purpose
+--- | ---
+`npx wrangler dev` | Local development
+`npx wrangler deploy` | Deploy to Cloudflare
+`npx wrangler types` | Generate TypeScript types
 
 Run `wrangler types` after changing bindings in `wrangler.jsonc`.
 
@@ -43,18 +38,14 @@ Run `wrangler types` after changing bindings in `wrangler.jsonc`.
 - Keep Fantasy Playtime's production endpoint at `https://contact-api.fantasyplaytime.com` and its production CORS and
   Turnstile hostname allowlists restricted to the frontend hostnames that are actually served. Never use wildcard
   production CORS or admit development origins in production.
-- Treat Turnstile site keys as public frontend configuration. Treat real Turnstile secrets and Resend API keys as private
-  Worker secrets: never commit, print, log, fixture, or place them in Wrangler variables. Cloudflare's official Turnstile
-  test secrets are the one exception and may appear in local-development fixtures such as `.dev.vars.example`. Fantasy
-  Playtime uses `TURNSTILE_SECRET` and an independently scoped `RESEND_API_KEY`; Charlie Yaris retains its existing
-  binding names.
-- Verify Turnstile server-side before sending mail, safely validate and escape user-provided content, and keep provider
-  responses, secrets, and stack traces out of client responses and logs. Official Turnstile test credentials and local
-  origins must never reach production configuration.
+- Treat Turnstile site keys as public configuration, and real Turnstile secrets and Resend API keys as Worker secrets
+  under the shared secrets rule, never placed in Wrangler variables. Cloudflare's official Turnstile test secrets may
+  appear in local-development fixtures such as `.dev.vars.example`. Fantasy Playtime uses `TURNSTILE_SECRET` and an
+  independently scoped `RESEND_API_KEY`, and Charlie Yaris retains its existing binding names.
+- Verify Turnstile server-side before sending mail, safely validate and escape user-provided content, keep provider
+  responses and stack traces out of client responses and logs, and keep local origins out of production configuration.
 
 ## JavaScript
 
-Follow the JavaScript-relevant formatting, dependency-ownership, and single-use guidance from `../svelte-lib/AGENTS.md`
-for source, test, and config JavaScript, including `.js`, `.mjs`, and JavaScript embedded in HTML. Repository-local rules
-override that sibling guidance, including tab indentation and the 140-character print width. Svelte component,
-embedded-app, package-export, and library-release rules do not apply to this plain Worker.
+The workspace JavaScript rules apply to source, test, and config JavaScript, including `.js`, `.mjs`, and JavaScript
+embedded in HTML. Repository-local rules override it, including tab indentation and the 140-character print width.
