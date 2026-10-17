@@ -5,8 +5,12 @@ Workers, KV, R2, D1, Durable Objects, Queues, Vectorize, Workers AI, or Agents S
 
 ## Shared Conventions
 
-- Inherit README and Markdown style, GitHub Actions, reusable workflow, pull-request review, workflow failure, commit,
-  and release-management rules from `../shared-automation/AGENTS.md`.
+- Inherit README and Markdown style, link verification, GitHub Actions, reusable workflow, release policy, dispatch,
+  pull-request review and merge authorization, workflow failure, commit, and release-management rules from the
+  shared topics in `../shared-automation/agents/`, which `CLAUDE.md` imports:
+  - `documentation.md`
+  - `git-and-pull-requests.md`
+  - `workflows.md`
 
 ## Current Documentation
 
@@ -54,7 +58,6 @@ Run `wrangler types` after changing bindings in `wrangler.jsonc`.
 
 ## JavaScript
 
-Follow the JavaScript-relevant formatting, dependency-ownership, and single-use guidance from `../svelte-lib/AGENTS.md`
-for source, test, and config JavaScript, including `.js`, `.mjs`, and JavaScript embedded in HTML. Repository-local rules
-override that sibling guidance, including tab indentation and the 140-character print width. Svelte component,
-embedded-app, package-export, and library-release rules do not apply to this plain Worker.
+Follow `../svelte-lib/agents/javascript.md`, which `CLAUDE.md` imports, for source, test, and config JavaScript,
+including `.js`, `.mjs`, and JavaScript embedded in HTML. Repository-local rules override it, including tab indentation
+and the 140-character print width.
