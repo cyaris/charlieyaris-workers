@@ -32,11 +32,11 @@ If the application uses Durable Objects or Workflows, also retrieve their curren
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npx wrangler dev` | Local development |
-| `npx wrangler deploy` | Deploy to Cloudflare |
-| `npx wrangler types` | Generate TypeScript types |
+Command | Purpose
+--- | ---
+`npx wrangler dev` | Local development
+`npx wrangler deploy` | Deploy to Cloudflare
+`npx wrangler types` | Generate TypeScript types
 
 Run `wrangler types` after changing bindings in `wrangler.jsonc`.
 
@@ -52,9 +52,8 @@ Run `wrangler types` after changing bindings in `wrangler.jsonc`.
   under the shared secrets rule, never placed in Wrangler variables. Cloudflare's official Turnstile test secrets may
   appear in local-development fixtures such as `.dev.vars.example`. Fantasy Playtime uses `TURNSTILE_SECRET` and an
   independently scoped `RESEND_API_KEY`, and Charlie Yaris retains its existing binding names.
-- Verify Turnstile server-side before sending mail, safely validate and escape user-provided content, and keep provider
-  responses, secrets, and stack traces out of client responses and logs. Official Turnstile test credentials and local
-  origins must never reach production configuration.
+- Verify Turnstile server-side before sending mail, safely validate and escape user-provided content, keep provider
+  responses and stack traces out of client responses and logs, and keep local origins out of production configuration.
 
 ## JavaScript
 
